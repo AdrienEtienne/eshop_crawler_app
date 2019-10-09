@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 
 class HomePage extends StatefulWidget {
-  static final String route = '/home';
+  static final String route = '/';
 
   HomePage({Key key, this.title}) : super(key: key);
 
