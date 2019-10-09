@@ -14,8 +14,7 @@ class SetActionSucceededAction {
 
 class SetActionFailedAction {
   final ActionName name;
-  final String error;
-  SetActionFailedAction(this.name, this.error);
+  SetActionFailedAction(this.name);
 }
 
 Future<void> loadStoredData(Store<AppState> store) async {
@@ -26,8 +25,7 @@ Future<void> loadStoredData(Store<AppState> store) async {
 
     store.dispatch(SetActionSucceededAction(ActionName.loadStoredData));
   } catch (e) {
-    store.dispatch(
-        SetActionFailedAction(ActionName.loadStoredData, e.toString()));
+    store.dispatch(SetActionFailedAction(ActionName.loadStoredData));
     throw e;
   }
 }
