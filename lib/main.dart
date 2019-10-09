@@ -1,65 +1,34 @@
+import 'package:eshop_crawler_app/pages/home_page.dart';
+import 'package:eshop_crawler_app/redux/middleware.dart';
+import 'package:eshop_crawler_app/redux/reducer.dart';
+import 'package:eshop_crawler_app/redux/state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:redux/redux.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final Store<RootState> store;
+
+  MyApp()
+      : store = Store<RootState>(
+          reducer,
+          initialState: RootState.initial(),
+          middleware: createStoreMiddleware(),
+        );
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
       title: 'Switch Prices',
-      home: MyHomePage(title: 'Switch Prices'),
       theme: CupertinoThemeData(
         primaryColor: CupertinoColors.destructiveRed,
       ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text(
-          widget.title,
-        ),
-        trailing: CupertinoButton(
-          padding: EdgeInsets.all(0),
-          onPressed: _incrementCounter,
-          child: Icon(CupertinoIcons.add),
-        ),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-            ),
-          ],
-        ),
-      ),
+      initialRoute: HomePage.route,
+      routes: {
+        HomePage.route: (context) => HomePage(title: 'Switch Prices'),
+      },
     );
   }
 }
