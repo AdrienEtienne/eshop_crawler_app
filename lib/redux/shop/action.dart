@@ -11,14 +11,14 @@ class SetShopsAction {
 }
 
 Future<void> fetchShops(Store<RootState> store) async {
-  store.dispatch(SetActionRequestedAction(ActionName.loadShops));
+  store.dispatch(SetActionRequestedAction(ActionName.fetchShops));
 
   try {
     final body = await EshopCrawlerClient().getShops();
     store.dispatch(SetShopsAction(body.result));
-    store.dispatch(SetActionSucceededAction(ActionName.loadShops));
+    store.dispatch(SetActionSucceededAction(ActionName.fetchShops));
   } catch (e) {
-    store.dispatch(SetActionFailedAction(ActionName.loadShops));
+    store.dispatch(SetActionFailedAction(ActionName.fetchShops));
     throw e;
   }
 }

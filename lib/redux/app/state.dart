@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-enum ActionName { loadStoredData, loadShops }
+enum ActionName { loadStoredData, fetchShops, fetchGames }
 
 class ActionState {
   final String id;

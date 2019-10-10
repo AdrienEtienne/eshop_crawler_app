@@ -7,5 +7,9 @@ final Reducer<ShopState> shopReducer = combineReducers([
 ]);
 
 ShopState _setShops(ShopState state, SetShopsAction action) {
+  action.shops.sort((shopA, shopB) {
+    return shopA.country.toLowerCase().compareTo(shopB.country.toLowerCase());
+  });
+
   return state.copyWith(list: action.shops);
 }

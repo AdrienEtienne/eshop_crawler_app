@@ -28,7 +28,16 @@ Future<void> loadStoredData(Store<RootState> store) async {
     final prefs = await SharedPreferences.getInstance();
 
     final search = prefs.getString(StoringKeys.gameSearch) ?? '';
-    store.dispatch(SetSearchGameFilterAction(search));
+    store.dispatch(SetSearchAction(search));
+
+    var searchCountries =
+        prefs.getStringList(StoringKeys.gameCountries) ?? List<String>();
+    searchCountries.forEach((code) {
+      store.dispatch(SelectShopAction(code, true));
+    });
+
+    final onSale = prefs.getBool(StoringKeys.gameOnSale) ?? false;
+    store.dispatch(SetOnSaleAction(onSale));
 
     store.dispatch(SetActionSucceededAction(ActionName.loadStoredData));
   } catch (e) {

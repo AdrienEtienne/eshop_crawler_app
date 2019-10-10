@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:eshop_crawler_app/data/eshop_crawler/models/game.dart';
 import 'package:eshop_crawler_app/data/eshop_crawler/models/shop.dart';
 import 'package:http/http.dart' as http;
 
@@ -38,5 +39,25 @@ class EshopCrawlerClient {
     final body = _parseResponse(response);
 
     return ShopsResponse.fromJson(body);
+  }
+
+  Future<GamesResponse> getGames({
+    String search = '',
+    List<String> countries,
+    bool sales = false,
+    num page = 1,
+  }) async {
+    final query =
+        '?search=$search&sales=$sales&page=$page&countries=${countries.join(',')}';
+
+    print(query);
+
+    final http.Response response = await http.get(
+      this.url('/v1/games$query'),
+      headers: this._getHeaders(),
+    );
+    final body = _parseResponse(response);
+
+    return GamesResponse.fromJson(body);
   }
 }
