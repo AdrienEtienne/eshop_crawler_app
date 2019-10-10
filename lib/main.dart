@@ -1,4 +1,6 @@
+import 'package:eshop_crawler_app/pages/game_filter_page.dart';
 import 'package:eshop_crawler_app/pages/home_page.dart';
+import 'package:eshop_crawler_app/redux/app/action.dart';
 import 'package:eshop_crawler_app/redux/middleware.dart';
 import 'package:eshop_crawler_app/redux/reducer.dart';
 import 'package:eshop_crawler_app/redux/shop/action.dart';
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
           initialState: RootState.initial(),
           middleware: createStoreMiddleware(),
         ) {
+    loadStoredData(store);
     fetchShops(store);
   }
 
@@ -33,6 +36,7 @@ class MyApp extends StatelessWidget {
         initialRoute: HomePage.route,
         routes: {
           HomePage.route: (context) => HomePage(),
+          GameFilterPage.route: (context) => GameFilterPage(),
         },
       ),
     );
