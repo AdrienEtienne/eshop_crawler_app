@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:eshop_crawler_app/pages/game_filter_page.dart';
-import 'package:eshop_crawler_app/redux/game/selector.dart';
+import 'package:eshop_crawler_app/pages/game_page.dart';
 import 'package:eshop_crawler_app/redux/state.dart';
 import 'package:eshop_crawler_app/view_models/game_filter_vm.dart';
 import 'package:eshop_crawler_app/view_models/games_vm.dart';
-import 'package:eshop_crawler_app/widgets/cupertino/cupertino_list_group.dart';
+import 'package:eshop_crawler_app/widgets/game_card.dart';
+import 'package:eshop_crawler_app/widgets/slide_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -81,9 +82,9 @@ class _HomeState extends State<HomePage> {
               child: CupertinoButton(
                 padding: EdgeInsets.all(0),
                 onPressed: () async {
-                  await Navigator.pushNamed(
+                  await Navigator.push(
                     context,
-                    GameFilterPage.route,
+                    SlideRoute(page: GameFilterPage()),
                   );
                   this.updateView(vm);
                   vm.games.onFetchGames(reset: true);
@@ -96,58 +97,14 @@ class _HomeState extends State<HomePage> {
             child: ListView(
               children: vm.games.list.map<Widget>(
                 (game) {
-                  final bestDiscount = vm.games.getBestDiscount(game);
-                  final percent =
-                      GameSelector.getPricePercentDiscount(bestDiscount);
-
                   return Container(
                     padding: EdgeInsets.only(top: 10),
-                    child: Column(
-                      children: <Widget>[
-                        Visibility(
-                          visible: game.euImageUrl != null,
-                          child: Container(
-                            decoration: new BoxDecoration(
-                              image: new DecorationImage(
-                                image: new NetworkImage(
-                                  'https:${game.euImageUrl}',
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            constraints: BoxConstraints(
-                              minWidth: double.infinity,
-                              minHeight: 400,
-                            ),
-                          ),
-                        ),
-                        CupertinoListGroup(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    game.title,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Visibility(
-                                    visible: bestDiscount.onSale,
-                                    child: Text(
-                                      '$percent% off',
-                                      style: TextStyle(
-                                        color: CupertinoColors.activeOrange,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Icon(CupertinoIcons.right_chevron),
-                            ],
-                          ),
-                        ),
-                      ],
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (context) => GamePage(game: game)));
+                      },
+                      child: GameCard(game: game),
                     ),
                   );
                 },

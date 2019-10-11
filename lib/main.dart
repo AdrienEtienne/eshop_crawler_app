@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
         theme: CupertinoThemeData(
           primaryColor: CupertinoColors.destructiveRed,
           scaffoldBackgroundColor: CupertinoColors.extraLightBackgroundGray,
+          barBackgroundColor: CupertinoColors.white.withOpacity(0.95),
         ),
         initialRoute: HomePage.route,
         routes: {

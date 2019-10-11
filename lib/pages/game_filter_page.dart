@@ -20,6 +20,38 @@ class GameFilterPage<GameFilterViewModel> extends StatefulWidget {
 class _GameFilterState extends State<GameFilterPage> {
   final TextEditingController _searchController = TextEditingController();
 
+  Widget buildCountries(GameFilterViewModel vm) {
+    final children = List<Widget>();
+
+    num i = 0;
+    vm.shops.forEach((shop) {
+      if (i++ > 0) {
+        children.add(Divider(
+          height: 2,
+        ));
+      }
+
+      children.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(shop.country),
+            CupertinoSwitch(
+              onChanged: (bool value) {
+                vm.onSelectCountry(shop.code, value);
+              },
+              value: vm.isShopSelected(shop),
+            ),
+          ],
+        ),
+      );
+    });
+
+    return Column(
+      children: children,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<RootState, GameFilterViewModel>(
@@ -34,8 +66,13 @@ class _GameFilterState extends State<GameFilterPage> {
           navigationBar: CupertinoNavigationBar(
             backgroundColor: CupertinoColors.white,
             border: Border(bottom: BorderSide.none),
-            previousPageTitle: 'Games',
             middle: Text('Filter'),
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Icon(CupertinoIcons.clear),
+            ),
           ),
           child: ListView(
             primary: false,
@@ -81,24 +118,7 @@ class _GameFilterState extends State<GameFilterPage> {
                 text: 'Countries where the games are sold',
               ),
               CupertinoListGroup(
-                child: Column(
-                  children: vm.shops.map(
-                    (shop) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(shop.country),
-                          CupertinoSwitch(
-                            onChanged: (bool value) {
-                              vm.onSelectCountry(shop.code, value);
-                            },
-                            value: vm.isShopSelected(shop),
-                          ),
-                        ],
-                      );
-                    },
-                  ).toList(),
-                ),
+                child: buildCountries(vm),
               )
             ],
           ),
