@@ -24,10 +24,10 @@ jobs:
       name: unit tests
       script:
         - ./flutter/bin/flutter test
-    - stage: tests
-      name: analyze
-      script:
-        - ./flutter/bin/flutter analyze
+    # - stage: tests
+    #   name: analyze
+    #   script:
+    #     - ./flutter/bin/flutter analyze
     - stage: tests
       name: build
       script:
