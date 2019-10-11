@@ -1,6 +1,7 @@
 import 'package:eshop_crawler_app/data/eshop_crawler/models/game.dart';
 import 'package:eshop_crawler_app/redux/state.dart';
 import 'package:eshop_crawler_app/view_models/games_vm.dart';
+import 'package:eshop_crawler_app/widgets/country.dart';
 import 'package:eshop_crawler_app/widgets/cupertino/cupertino_list_group.dart';
 import 'package:eshop_crawler_app/widgets/cupertino/cupertino_title.dart';
 import 'package:eshop_crawler_app/widgets/game_image.dart';
@@ -52,7 +53,9 @@ class _GameState extends State<GamePage> {
       children.add(Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(shopPrice.shop.country),
+          Country(
+            country: shopPrice.shop.country,
+          ),
           Price(
             price: shopPrice.price,
           ),

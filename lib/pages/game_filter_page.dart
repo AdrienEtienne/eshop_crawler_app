@@ -1,5 +1,6 @@
 import 'package:eshop_crawler_app/redux/state.dart';
 import 'package:eshop_crawler_app/view_models/game_filter_vm.dart';
+import 'package:eshop_crawler_app/widgets/country.dart';
 import 'package:eshop_crawler_app/widgets/cupertino/cupertino_list_group.dart';
 import 'package:eshop_crawler_app/widgets/cupertino/cupertino_title.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,7 +36,9 @@ class _GameFilterState extends State<GameFilterPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(shop.country),
+            Country(
+              country: shop.country,
+            ),
             CupertinoSwitch(
               onChanged: (bool value) {
                 vm.onSelectCountry(shop.code, value);
