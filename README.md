@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AdrienEtienne/eshop_crawler_app.svg?branch=master)](https://travis-ci.org/AdrienEtienne/eshop_crawler_app)
+
 # eshop_crawler_app
 
 A new Flutter project.
