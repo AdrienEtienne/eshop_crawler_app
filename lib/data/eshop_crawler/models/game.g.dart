@@ -59,6 +59,9 @@ GamesResponse _$GamesResponseFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : GameDto.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    meta: json['meta'] == null
+        ? null
+        : Metadata.fromJson(json['meta'] as Map<String, dynamic>),
     statusCode: json['statusCode'] as num,
   );
 }
@@ -66,5 +69,6 @@ GamesResponse _$GamesResponseFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$GamesResponseToJson(GamesResponse instance) =>
     <String, dynamic>{
       'statusCode': instance.statusCode,
+      'meta': instance.meta,
       'result': instance.result,
     };

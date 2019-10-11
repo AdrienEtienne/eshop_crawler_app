@@ -4,6 +4,7 @@ import 'package:eshop_crawler_app/data/eshop_crawler/client.dart';
 import 'package:eshop_crawler_app/data/eshop_crawler/models/game.dart';
 import 'package:eshop_crawler_app/data/eshop_crawler/models/request.dart';
 import 'package:eshop_crawler_app/redux/app/action.dart';
+import 'package:eshop_crawler_app/redux/app/selector.dart';
 import 'package:eshop_crawler_app/redux/app/state.dart';
 import 'package:eshop_crawler_app/redux/state.dart';
 import 'package:redux/redux.dart';
@@ -35,6 +36,13 @@ class ResetGamesAction {
 }
 
 Future<void> fetchGames(Store<RootState> store, {reset = false}) async {
+  if (AppSelector.isActionLoading(
+    store.state.app.actions,
+    ActionName.fetchGames,
+  )) {
+    return;
+  }
+
   store.dispatch(SetActionRequestedAction(ActionName.fetchGames));
 
   if (reset) {

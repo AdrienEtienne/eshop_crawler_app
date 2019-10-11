@@ -16,7 +16,8 @@ class PriceShop {
 
 class GamesViewModel {
   final List<GameDto> list;
-  final bool isLoading;
+  final bool Function() isLoading;
+  final bool Function() hasMore;
   final List<PriceShop> Function(
     List<PriceDto> prices,
   ) getFilteredPriceShops;
@@ -25,6 +26,7 @@ class GamesViewModel {
   GamesViewModel({
     @required this.list,
     @required this.isLoading,
+    @required this.hasMore,
     @required this.getFilteredPriceShops,
     @required this.onFetchGames,
   });
@@ -32,10 +34,12 @@ class GamesViewModel {
   static fromStore(Store<RootState> store) {
     return GamesViewModel(
       list: store.state.game.list,
-      isLoading: AppSelector.isActionLoading(
+      isLoading: () => AppSelector.isActionLoading(
         store.state.app.actions,
         ActionName.fetchGames,
       ),
+      hasMore: () =>
+          store.state.game.list.length < store.state.game.page.itemsTotal,
       getFilteredPriceShops: (List<PriceDto> prices) {
         final results = List<PriceShop>();
         List<ShopDto> shops = store.state.shop.list;
@@ -56,7 +60,7 @@ class GamesViewModel {
         });
         return results;
       },
-      onFetchGames: ({reset}) async {
+      onFetchGames: ({reset = false}) async {
         fetchGames(store, reset: reset);
       },
     );

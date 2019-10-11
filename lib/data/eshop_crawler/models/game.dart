@@ -78,8 +78,9 @@ class GamesResponse extends SuccessResponse {
   @JsonKey()
   List<GameDto> result;
 
-  GamesResponse({this.result, num statusCode})
+  GamesResponse({this.result, Metadata meta, num statusCode})
       : super(
+          meta: meta,
           statusCode: statusCode,
         );
   factory GamesResponse.fromJson(Map<String, dynamic> json) {
