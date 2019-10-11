@@ -2,7 +2,9 @@
 
 # eshop_crawler_app
 
-A new Flutter project.
+Search Nintendo Switch games.
+
+Call API provided by this project: https://github.com/AdrienEtienne/eshop-crawler.
 
 ## Getting Started
 
