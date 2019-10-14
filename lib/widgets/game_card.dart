@@ -25,27 +25,33 @@ class GameCard extends StatelessWidget {
         ),
         CupertinoListGroup(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    game.title,
-                    textAlign: TextAlign.center,
-                  ),
-                  Visibility(
-                    visible: bestDiscount.onSale,
-                    child: Text(
-                      '$percent% off',
-                      style: TextStyle(
-                        color: CupertinoColors.activeOrange,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      game.title,
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
+                      maxLines: 1,
+                    ),
+                    Visibility(
+                      visible: bestDiscount.onSale,
+                      child: Text(
+                        '$percent% off',
+                        style: TextStyle(
+                          color: CupertinoColors.activeOrange,
+                        ),
                       ),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
-              Icon(CupertinoIcons.right_chevron),
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Icon(CupertinoIcons.right_chevron),
+              ),
             ],
           ),
         ),
